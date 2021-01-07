@@ -22,4 +22,3 @@ HOWTO:
   > export PYTHONPATH="`pwd`/lib:$PYTHONPATH" && pytest
   > deactivate
   ```
-  

@@ -1,5 +1,8 @@
 HOWTO:
-* download image: docker pull azshoo/alaska:1.0
+* download image: 
+  ```bash
+  docker pull azshoo/alaska:1.0
+  ```
 * get info:
   * start application: 
     ```bash

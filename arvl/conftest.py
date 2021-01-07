@@ -15,6 +15,11 @@ async def unit_under_test():
     await uut.stop()
 
 
+def pytest_configure(config):
+    # register an additional marker
+    config.addinivalue_line("markers", "testcase_id(id): mark test with test case ID")
+
+
 def is_empty():
     pass
 

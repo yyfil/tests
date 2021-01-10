@@ -1,10 +1,7 @@
 import pytest
-#from aiohttp_requests import requests
 import requests
 import json
 from test_data.alaska import INFO_MESSAGE_CORRECT, INFO_MESSAGE_CURRENT, BEAR_TYPES_LIST, EMPTY_VALUE
-import aiohttp
-import asyncio
 
 
 pytestmark = pytest.mark.asyncio
@@ -74,7 +71,7 @@ async def test_add_a_bear(unit_under_test):
     Steps:
          # Send POST request to ALASKA_SERVER_URL/bear endpoint with JSON string passed as data payload
          # Remember bear_id from response body
-         # Send GET request to ALASKA_SERVER_URL/bear
+         # Send GET request to ALASKA_SERVER_URL/bear/<bear_id>
     Expected result:
         Response with HTTP/200 status
         Response body contains JSON object that describes created bear"""
@@ -166,7 +163,7 @@ async def test_modify_bear_name(unit_under_test):
     Steps:
          # Send POST request to ALASKA_SERVER_URL/bear endpoint with JSON string passed as data payload
          # Remember bear_id from response body
-         # Send PUT request to ALASKA_SERVER_URL/bear/<bear_id> endpoint with JSON that contains modified bear_type
+         # Send PUT request to ALASKA_SERVER_URL/bear/<bear_id> endpoint with JSON that contains modified bear_name
          field
          # Send GET request to ALASKA_SERVER_URL/bear/<bear_id> endpoint
     Expected result:
@@ -201,7 +198,7 @@ async def test_modify_bear_age(unit_under_test):
     Steps:
          # Send POST request to ALASKA_SERVER_URL/bear endpoint with JSON string passed as data payload
          # Remember bear_id from response body
-         # Send PUT request to ALASKA_SERVER_URL/bear/<bear_id> endpoint with JSON that contains modified bear_type
+         # Send PUT request to ALASKA_SERVER_URL/bear/<bear_id> endpoint with JSON that contains modified bear_age
          field
          # Send GET request to ALASKA_SERVER_URL/bear/<bear_id> endpoint
     Expected result:
@@ -359,7 +356,7 @@ async def test_add_a_bear_uppercase_different_types(unit_under_test, bear_type):
     assert json.loads(response_text) == mikhail_json
 
 
-@pytest.mark.parametrize('bear_age', [17.5, 1, 0.6])
+@pytest.mark.parametrize('bear_age', [17.5, 1, 0.6, 100])
 @pytest.mark.testcase_id('TC-11')
 async def test_add_a_bear_uppercase_different_ages(unit_under_test, bear_age):
     """

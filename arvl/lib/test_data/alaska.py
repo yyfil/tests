@@ -29,4 +29,8 @@ Available types for bears are: POLAR, BROWN, BLACK and GUMMY.'''
 
 BEAR_TYPES_LIST = ["POLAR", "BROWN", "BLACK", "GUMMY"]
 
+VALID_BEAR_TYPES_LIST = ["POLAR", "BROWN", "BLACK"]
+
 EMPTY_VALUE = 'EMPTY'
+
+ALASKA_SERVER_URL = 'http://0.0.0.0:8091'

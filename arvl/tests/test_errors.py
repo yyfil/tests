@@ -37,24 +37,28 @@ async def test_modify_nonexistent_bear(unit_under_test):
     assert put_response.status_code == 500
 
 
-@pytest.mark.parametrize('bear_age', [101, 0, -5, 'wrong age'])
+@pytest.mark.parametrize('bear_age', [100.1, 0, -5, 'wrong age'])
 @pytest.mark.testcase_id('TC-12')
 async def test_add_a_bear_uppercase_invalid_ages(unit_under_test, bear_age):
-    """
-    Summary:
-        You can create a bear with a POST request to /bear endpoint
-    Setup:
-        Alaska server started
-    Tear down:
-        Stop Alaska server
-    Steps:
-         # Send POST request to ALASKA_SERVER_URL/bear endpoint with JSON string passed as data payload
-         # Remember bear_id from response body
-         # Send GET request to ALASKA_SERVER_URL/bear/<bear_id>
-    Expected result:
-        Response with HTTP/200 status
-        Response body contains JSON object that describes created bear"""
     mikhail_json = {"bear_type": "BLACK", "bear_name": "MIKHAIL", "bear_age": bear_age}
+    await unit_under_test()
+    post_response = requests.post(f'{ALASKA_SERVER_URL}/bear', data=json.dumps(mikhail_json))
+    assert post_response.status_code == 500
+
+
+@pytest.mark.parametrize('bear_type', ['wrong type', 0, ''])
+@pytest.mark.testcase_id('TC-20')
+async def test_add_a_bear_uppercase_invalid_types(unit_under_test, bear_type):
+    mikhail_json = {"bear_type": bear_type, "bear_name": "MIKHAIL", "bear_age": 9}
+    await unit_under_test()
+    post_response = requests.post(f'{ALASKA_SERVER_URL}/bear', data=json.dumps(mikhail_json))
+    assert post_response.status_code == 500
+
+
+@pytest.mark.parametrize('bear_name', ['', 0])
+@pytest.mark.testcase_id('TC-21')
+async def test_add_a_bear_uppercase_invalid_names(unit_under_test, bear_name):
+    mikhail_json = {"bear_type": "BLACK", "bear_name": bear_name, "bear_age": 9}
     await unit_under_test()
     post_response = requests.post(f'{ALASKA_SERVER_URL}/bear', data=json.dumps(mikhail_json))
     assert post_response.status_code == 500

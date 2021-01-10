@@ -1,5 +1,3 @@
-import pytest
-from aiohttp_requests import requests
 from alaska.runner import DockerRunner
 
 

@@ -1,0 +1,8 @@
+.idea
+.venv
+*__pycache__*
+tags
+pytest.ini
+*.log
+*.html*
+assets/

@@ -1,0 +1,6 @@
+docker
+pytest
+pytest-asyncio
+pytest-html
+requests
+names

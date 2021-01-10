@@ -22,6 +22,7 @@ HOWTO:
   > virtualenv -p python3 .venv
   > source .venv/bin/activate
   > pip install -r requirements.txt
-  > export PYTHONPATH="`pwd`/lib:$PYTHONPATH" && pytest
+  > export PYTHONPATH="`pwd`/lib:$PYTHONPATH" && pytest --html=report.html
   > deactivate
   ```
+* to access report open report.html in any browser

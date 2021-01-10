@@ -25,3 +25,8 @@ DELETE			/bear/:id - delete specific bear
 
 Example of ber json: {"bear_type":"BLACK","bear_name":"mikhail","bear_age":17.5}.
 Available types for bears are: POLAR, BROWN, BLACK and GUMMY.'''
+
+
+BEAR_TYPES_LIST = ["POLAR", "BROWN", "BLACK", "GUMMY"]
+
+EMPTY_VALUE = 'EMPTY'

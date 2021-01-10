@@ -62,3 +62,14 @@ async def test_add_a_bear_uppercase_invalid_names(unit_under_test, bear_name):
     await unit_under_test()
     post_response = requests.post(f'{ALASKA_SERVER_URL}/bear', data=json.dumps(mikhail_json))
     assert post_response.status_code == 500
+
+
+@pytest.mark.testcase_id('TC-22')
+async def test_404(unit_under_test):
+    """
+    Some destructive testing
+    """
+    mikhail_json = {"bear_type": "BLACK", "bear_name": "MIKHAIL", "bear_age": 17.5}
+    await unit_under_test()
+    put_response = requests.put(f'{ALASKA_SERVER_URL}/some_endpoint', data=json.dumps(mikhail_json))
+    assert put_response.status_code == 404

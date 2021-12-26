@@ -1,0 +1,274 @@
+swagger: "2.0"
+info:
+  description: "This is an Irdeto QA task API docs."
+  version: "1.0.0"
+  title: "Irdeto QA task"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "something_something@example.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "sut.example"
+basePath: "/v2"
+tags:
+- name: "state"
+  description: "Change SUT state"
+- name: "user"
+  description: "Operations about user"
+- name: "items"
+  description: "Operations about items"
+schemes:
+- "https"
+- "http"
+paths:
+  /state:
+    get:
+      tags:
+      - "state"
+      summary: "Get SUT state"
+      operationId: "getState"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/State"
+    put:
+      tags:
+      - "state"
+      summary: "Change SUT state"
+      operationId: "updateState"
+      parameters:
+      - name: "stateId"
+        in: "query"
+        description: "State that SUT should switch to"
+        required: true
+        type: "string"
+        enum:
+        - "logIn"
+        - "config"
+        - "dashboard"
+        - "itemDetails"
+        - "itemsControl"
+      responses:
+        "200":
+          description: "State updated"
+        "400":
+          description: "SUT cannot change to this state. See state transition diagram"
+        "404":
+          description: "State not found"
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The user name for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Invalid username/password supplied"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        default:
+          description: "Successful operation"
+  /user/{userId}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user ID"
+      description: ""
+      operationId: "getUserById"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "ID of user to return"
+        required: true
+        type: "string"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ItemDef"
+        "400":
+          description: "Invalid userID supplied"
+        "404":
+          description: "User not found"
+    put:
+      tags:
+      - "user"
+      summary: "Update user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "ID of user to return"
+        required: true
+        type: "string"
+      - name: "username"
+        in: "query"
+        description: "name that needs to be updated"
+        required: false
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "password that needs to be updated"
+        required: false
+        type: "string"
+      - name: "controlAccess"
+        in: "query"
+        description: "Access to Item control"
+        required: false
+        type: "string"
+        enum:
+        - "allow"
+        - "deny"
+      responses:
+        "200":
+          description: "User updated"
+        "400":
+          description: "Invalid user supplied"
+        "404":
+          description: "User not found"
+  /items:
+    get:
+      tags:
+      - "items"
+      summary: "Get items"
+      operationId: "getItems"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "Page number"
+        required: true
+        type: "integer"
+        default: 0
+      - name: "sortByDate"
+        in: "query"
+        description: "Sort by date"
+        required: false
+        enum:
+        - "asc"
+        - "desc"
+        type: "string"
+        default: "desc"
+      - name: "state"
+        in: "query"
+        description: "Filter items by state"
+        required: false
+        enum:
+        - "run"
+        - "pause"
+        - "stop"
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ItemDef"
+        "400":
+          description: "Invalid status value"
+  /items/{itemId}:
+    get:
+      tags:
+      - "items"
+      summary: "Get item details"
+      operationId: "getItemDetails"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "itemId"
+        in: "path"
+        description: "Item ID"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ItemDef"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+      - "items"
+      summary: "Control item"
+      operationId: "updateItem"
+      parameters:
+      - name: "itemId"
+        in: "path"
+        description: "Item ID"
+        required: true
+        type: "integer"
+      - name: "status"
+        in: "query"
+        description: "New item processing status"
+        required: true
+        type: "string"
+        enum:
+        - "run"
+        - "pause"
+        - "stop"
+      responses:
+        "200":
+          description: "Item updated"
+        "400":
+          description: "Invalid status value"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      username:
+        type: "string"
+      controlAccess:
+        type: "string"
+  State:
+    type: "object"
+    properties:
+      state: 
+        type: "string"
+  ItemDef:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      date:
+        type: "string"
+      state:
+        type: "string"

@@ -15,6 +15,3 @@ def math_function(x: int):
         raise ValueError(f'Function accepts values in ranges [-10, -2], (-2, 8), x!=1 and (8, 35]. '
                          f'Input value: {x}')
 
-
-if __name__ == "__main__":
-    math_function(1 + 1/256)

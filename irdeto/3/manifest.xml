@@ -1,0 +1,26 @@
+<Period duration="PT59.2S" id="2215" start="PT1614853010.04S">
+    <BaseURL>dash/</BaseURL>
+    <AdaptationSet audioSamplingRate="48000" codecs="mp4a.40.5" contentType="audio" group="1" id="1" lang="en" mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2" />
+        <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main" />
+        <SegmentTemplate initialization="YOYO-$RepresentationID$.dash" media="YOYO-$RepresentationID$-$Time$.dash" presentationTimeOffset="77512944481920" timescale="48000">
+            <SegmentTimeline>
+                <S d="237568" t="77512944245119" />
+                <S d="147457" />
+                <S d="190464" />
+                <S d="192511" r="2"/>
+                <S d="192512" r="2"/>
+                <S d="192513" r="2"/>
+                <S d="190464" />
+                <S d="192511" />
+                <S d="192512" />
+                <S d="192513" />
+                <S d="190464" />
+                <S d="190464" />
+                <S d="199679" />
+            </SegmentTimeline>
+        </SegmentTemplate>
+        <Representation bandwidth="64000" id="audio_1=64000">
+        </Representation>
+    </AdaptationSet>
+</Period>
